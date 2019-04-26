@@ -1,13 +1,21 @@
 const request=require("request")
 module.exports=robot => {
   //https://pbs.twimg.com/
-  robot.hear(/\#めし|https\:\/\/pbs\.twimg\.com/i,msg => {
+  //sample https://neko-house.slack.com/archives/CBT3RT9PE/p1556284925000800
+  //sample https://WorkSpace_.slack.com/archives/channelID/POSTsID
+  robot.hear(/\#めし|https\:\/\/pbs\.twimg\.com/gi,msg => {
     //console.log(msg.message.text)
     if(msg.message.text.match(/\#めし/gi) && msg.message.text.match(/https\:\/\/pbs\.twimg\.com/gi)){
       robot.send({room: "#めしぃプロ"},
       `https://${process.env.SLACK_WORKSPACE_URL}/archives/${msg.message.rawMessage.channel}/p${msg.message.rawMessage.ts.toString().replace(/\./,"")}`
     )
     }
+  })
+  robot.hear(/\#知見/gi,msg => {
+    //console.log(msg.message.text)
+    robot.send({room: "#知見"},
+    `https://${process.env.SLACK_WORKSPACE_URL}/archives/${msg.message.rawMessage.channel}/p${msg.message.rawMessage.ts.toString().replace(/\./,"")}`
+    )
   })
 
   robot.hear(/.+/i,msg => {
